@@ -1,0 +1,80 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Templates Page</title>
+    <link rel="stylesheet" th:href="@{/css/templates/form.css}">
+</head>
+<body>
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(templates)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<a class="btn btn-secondary mb-3" th:href="@{/templates/list}" role="button">	
+			<span class="oi oi-chevron-left" data-glyph="chevron-left" title="back" aria-hidden="true"></span>
+			Back
+		</a>
+	    <h3 class="mb-3">Template</h3>
+	    
+		<form method="post" th:action="@{/templates/form}" th:object="${templateForm}" enctype="multipart/form-data">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="form-group">
+				<label id="templateNameInput">Name</label>
+				<input type="text" th:field="*{name}"
+					class="form-control" id="templateNameInput"
+					placeholder="Template Name"
+					th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+				<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
+                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>		
+			</div>
+			<div class="form-group">
+				<label for="templateTextInput">Text:</label>
+				<textarea class="form-control" id="templateTextInput" rows="15"
+					th:field="*{text}"
+					th:classappend="${#fields.hasErrors('text')} ? 'is-invalid' : ''"></textarea>
+				<ul class="help-inline" th:if="${#fields.hasErrors('text')}">
+                    <li class="error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+                </ul>		
+			</div>
+			
+			<fieldset>
+				<legend>Attachments</legend>
+				<div id="attachment-input-container">
+					<div th:each="attachment : *{attachments}" class="form-group mb-0">
+						<button type="button" class="btn btn-link btn-sm remove-attachment">
+							<span class="oi oi-trash" data-glyph="trash" title="remove" aria-hidden="true"></span>
+						</button>
+						<a th:href="@{/templates/attachment/} + ${attachment.id}" th:text="${attachment.name}" target="_blank"></a>
+						<input type="hidden" name="attachmentIds" th:value="${attachment.id}" /> 
+					</div>
+				</div>
+				<button type="button" class="btn btn-link" id="new-attachment-button">
+					<span class="oi oi-plus" data-glyph="plus" title="New Template" aria-hidden="true"></span>
+					New Attachment
+				</button>
+			</fieldset>
+			
+			<button type="submit" class="btn btn-primary mt-3">Save Template</button>
+		</form>
+		<div class="d-none" id="attachment-template">
+			<div class="form-group">
+				<div class="form-inline">
+					<button type="button" class="btn btn-link remove-attachment">
+						<span class="oi oi-trash" data-glyph="trash" title="remove" aria-hidden="true"></span>
+					</button>
+					<div class="form-group">
+						<input type="file" class="form-control-file" name="uploadedFiles"/>
+					</div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	
+	<th:block layout:fragment="post-scripts">
+		<script th:src="@{/js/templates/form.js}"></script>
+	</th:block>
+	
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Templates Page</title>
+    <link rel="stylesheet" th:href="@{/css/templates/form.css}">
+</head>
+<body>
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(templates)"></div>
+	</div>
+
+	<div layout:fragment="content">
+	    <h2>Template</h2>
+		<form method="post" th:action="@{/templates/form}" th:object="${template}">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="form-group">
+				<label id="templateNameInput">Name</label>
+				<input type="text" th:field="*{name}"
+					class="form-control" id="templateNameInput"
+					placeholder="Template Name"
+					th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+				<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
+                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+                </ul>		
+			</div>
+			<div class="form-group">
+				<label for="templateTextInput">Text:</label>
+				<textarea class="form-control" id="templateTextInput" rows="15"
+					th:field="*{text}"
+					th:classappend="${#fields.hasErrors('text')} ? 'is-invalid' : ''"></textarea>
+				<ul class="help-inline" th:if="${#fields.hasErrors('text')}">
+                    <li class="error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
+                </ul>	
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+
+		
+	</div>
+	
+</body>
+</html>

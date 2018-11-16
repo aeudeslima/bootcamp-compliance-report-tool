@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}">
+<head>
+    <title>Schedule Page</title>
+</head>
+<body>
+
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(reports)"></div>
+	</div>
+
+
+	<div layout:fragment="content">
+	    <table class="table table-striped table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Name</th>
+		      <th scope="col">Time to Send</th>
+		      <th scope="col">Template</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>CC Team</td>
+		      <td>08:00</td>
+		      <td>Template Test</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>CXMonitor Team</td>
+		      <td>08:00</td>
+		      <td>Template Test</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td>Code Team</td>
+		      <td>08:00</td>
+		      <td>Template Test</td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>

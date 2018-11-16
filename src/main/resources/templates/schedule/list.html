@@ -1,0 +1,41 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Scheduler Page</title>
+</head>
+<body>
+
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(schedule)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<a class="btn btn-primary mb-3" th:href="@{/schedule/form}" role="button">
+			<span class="oi oi-plus" data-glyph="plus" title="New Template" aria-hidden="true"></span>
+			Create Schedule
+		</a>
+	
+		<h4>Currently Active Report Schedules</h4>
+	    <table class="table table-striped table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">Name</th>
+		      <th scope="col" class="table-options-column">Options</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="schedule : ${schedules}">
+		      <td th:text="${schedule.name}"></td>
+		      <td class="table-options-column">
+		      	<form th:action="@{/schedule/} + ${schedule.id}" th:method="delete" class="form-inline">
+			      	<a th:href="@{/schedule/form/} + ${schedule.id}">Edit</a>
+		      		<button type="submit" class="btn btn-link">Delete</button>
+		      	</form>
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>

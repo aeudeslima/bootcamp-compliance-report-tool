@@ -1,0 +1,21 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports Page</title>
+</head>
+<body>
+
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(reports)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<a th:href="@{/reports}" class="btn btn-link">&lt; Back to List</a>
+		<br>
+		<div class="mt-3">
+			<h4>Mail successfully sent!</h4>
+		</div>
+	</div>
+</body>
+</html>

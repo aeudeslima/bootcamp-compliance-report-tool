@@ -1,0 +1,33 @@
+.box {
+	width: 500px;
+	margin: auto;
+	padding: 30px;
+	border: 1px solid silver;
+}
+
+.box ul li {
+	text-align: left;
+}
+
+.google-signin {
+	display: block;
+	margin: 2	0px auto;
+	width: 191px;
+	height: 46px;
+	background-image: url("/img/btn_google_signin_dark_normal_web.png");
+	text-align: center;
+}
+
+
+.google-signin:hover {
+	background-image: url("/img/btn_google_signin_dark_focus_web.png");
+}
+
+
+.google-signin:active {
+	background-image: url("/img/btn_google_signin_dark_pressed_web.png");
+}
+
+.welcome {
+	text-align: center;
+}

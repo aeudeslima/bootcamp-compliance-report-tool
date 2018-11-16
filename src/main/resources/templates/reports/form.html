@@ -1,0 +1,99 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports Page</title>
+</head>
+<body>
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(reports)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<a class="btn btn-secondary mb-3" th:href="@{/reports/list}" role="button">	
+			<span class="oi oi-chevron-left" data-glyph="chevron-left" title="back" aria-hidden="true"></span>
+			Back
+		</a>
+	    <h3 class="mb-3">Report</h3>
+		<form method="post" th:action="@{/reports/form}" th:object="${reportForm}">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="form-row">
+				<div class="form-group col-md-6">
+					<label id="reportNameInput">Name</label>
+					<input type="text" th:field="*{name}"
+						class="form-control" id="reportNameInput"
+						placeholder="Report Name"
+						th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
+	                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group col-md-6">
+					<label id="spreadsheetURLInput">Source Sheet URL</label>
+					<input type="text" th:field="*{spreadsheetURL}"
+						class="form-control" id="spreadsheetURLInput"
+						th:classappend="${#fields.hasErrors('spreadsheetURL')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('spreadsheetURL')}">
+	                    <li class="error" th:each="err : ${#fields.errors('spreadsheetURL')}" th:text="${err}"></li>
+	                </ul>
+				</div>
+			</div>
+			<fieldset>
+				<legend>Mail Properties</legend>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label id="mailFromInput">From</label>
+						<input type="text" th:field="*{mailFrom}"
+							class="form-control" id="mailFromInput"
+							th:classappend="${#fields.hasErrors('mailFrom')} ? 'is-invalid' : ''"/>
+						<ul class="help-inline" th:if="${#fields.hasErrors('mailFrom')}">
+		                    <li class="error" th:each="err : ${#fields.errors('mailFrom')}" th:text="${err}"></li>
+		                </ul>		
+					</div>
+					<div class="form-group col-md-6">
+						<label id="mailSubjectInput">Subject</label>
+						<input type="text" th:field="*{mailSubject}"
+							class="form-control" id="mailSubjectInput"
+							th:classappend="${#fields.hasErrors('mailSubject')} ? 'is-invalid' : ''"/>
+						<ul class="help-inline" th:if="${#fields.hasErrors('mailSubject')}">
+		                    <li class="error" th:each="err : ${#fields.errors('mailSubject')}" th:text="${err}"></li>
+		                </ul>		
+					</div>
+				</div>
+				<div class="form-group">
+					<label id="mailToInput">To</label>
+					<input type="text" th:field="*{mailTo}" 
+						class="form-control" id="mailToInput"
+						th:classappend="${#fields.hasErrors('mailTo')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('mailTo')}">
+	                    <li class="error" th:each="err : ${#fields.errors('mailTo')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group">
+					<label id="mailCcInput">CC</label>
+					<input type="text" th:field="*{mailCc}" multiple
+						class="form-control" id="mailCcInput"
+						th:classappend="${#fields.hasErrors('mailCc')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('mailCc')}">
+	                    <li class="error" th:each="err : ${#fields.errors('mailCc')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group">
+					<label id="templateInput">Template</label>
+					<select th:field="*{templateId}"
+						class="form-control" id="templateInput"
+						th:classappend="${#fields.hasErrors('templateId')} ? 'is-invalid' : ''">
+						<th:block th:each="t : ${templates}">
+							<option th:value="${t.id}" th:text="${t.name}"></option>
+						</th:block>
+					</select>
+					<ul class="help-inline" th:if="${#fields.hasErrors('templateId')}">
+	                    <li class="error" th:each="err : ${#fields.errors('templateId')}" th:text="${err}">Input is incorrect</li>
+	                </ul>		
+				</div>
+			</fieldset>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>

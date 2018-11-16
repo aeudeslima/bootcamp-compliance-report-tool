@@ -1,0 +1,9 @@
+.table-options-column {
+	width: 20%;
+}
+.main-content {
+	margin: 10px 100px;
+}
+li.error {
+	color: red;
+}

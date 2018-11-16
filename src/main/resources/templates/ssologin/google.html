@@ -1,0 +1,23 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Main Page</title>
+    <link rel="stylesheet" th:href="@{/css/ssologin/ssologin.css}">
+</head>
+<body>
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(login)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<h1 class="welcome">Welcome</h1>
+		<div class="box">
+			<h4>Google Sign-In</h4>
+			<p>Please, log into your Google account in order to be able to read spreadsheets and send emails from the app.</p>
+			<a href="/home" class="google-signin"></a>
+		</div>
+	</div>
+</body>
+</html>
+

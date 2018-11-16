@@ -1,0 +1,104 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Scheduler Page</title>
+</head>
+<body>
+
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(schedule)"></div>
+	</div>
+
+	<div layout:fragment="content">
+	    <a class="btn btn-secondary mb-3" th:href="@{/schedule/list}" role="button">	
+			<span class="oi oi-chevron-left" data-glyph="chevron-left" title="Back" aria-hidden="true"></span>
+			Back
+		</a>
+	    <h3 class="mb-3">Schedule</h3>
+		<form method="post" th:action="@{/schedule/form}" th:object="${scheduleForm}">
+			<input type="hidden" th:field="*{id}"/>
+			<div class="row">
+				<div class="form-group col">
+					<label id="taskNameInput">Name</label>
+					<input type="text" th:field="*{name}"
+						class="form-control" id="taskNameInput"
+						placeholder="Schedule Name"
+						th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
+	                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group col">
+					<label id="reportInput">Report</label>
+					<select th:field="*{reportId}"
+						class="form-control" id="reportInput"
+						th:classappend="${#fields.hasErrors('reportId')} ? 'is-invalid' : ''">
+						<th:block th:each="r : ${reports}">
+							<option th:value="${r.id}" th:text="${r.name}"></option>
+						</th:block>
+					</select>
+					<ul class="help-inline" th:if="${#fields.hasErrors('reportId')}">
+	                    <li class="error" th:each="err : ${#fields.errors('reportId')}" th:text="${err}"></li>
+	                </ul>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-form-label">Weekdays</label>
+				<div class="ml-3">
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="mondayInput" value="1" 
+							th:checked="*{weekDays.contains('1')}"/>
+						<label class="form-check-label" for="mondayInput">Monday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="tuesdayInput" value="2"
+							th:checked="*{weekDays.contains('2')}"/>
+						<label class="form-check-label" for="tuesdayInput">Tuesday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="wednesdayInput" value="3"
+							th:checked="*{weekDays.contains('3')}"/>
+						<label class="form-check-label" for="wednesdayInput">Wednesday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="thursdayInput" value="4"
+							th:checked="*{weekDays.contains('4')}"/>
+						<label class="form-check-label" for="thursdayInput">Thursday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="fridayInput" value="5"
+							th:checked="*{weekDays.contains('5')}"/>
+						<label class="form-check-label" for="fridayInput">Friday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="saturdayInput" value="6"
+							th:checked="*{weekDays.contains('6')}"/>
+						<label class="form-check-label" for="saturdayInput">Saturday</label>
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" th:field="*{weekDays}" id="sundayInput" value="7"
+							th:checked="*{weekDays.contains('7')}"/>
+						<label class="form-check-label" for="sundayInput">Sunday</label>
+					</div>
+					<ul class="help-inline" th:if="${#fields.hasErrors('weekDays')}">
+	                    <li class="error" th:each="err : ${#fields.errors('weekDays')}" th:text="${err}"></li>
+	                </ul>
+	            </div>
+			</div>
+			<div class="form-group">
+				<label id="taskNameInput">Time</label>
+				<input type="time" th:field="*{time}" th:value="${scheduleTime}"
+					class="form-control" id="timeInput"
+					placeholder="Schedule Time"
+					th:classappend="${#fields.hasErrors('time')} ? 'is-invalid' : ''"/>
+				<ul class="help-inline" th:if="${#fields.hasErrors('weekDays')}">
+                    <li class="error" th:each="err : ${#fields.errors('weekDays')}" th:text="${err}"></li>
+                </ul>
+			</div>
+			<button type="submit" class="btn btn-primary">Save</button>
+		</form>
+	</div>
+</body>
+</html>

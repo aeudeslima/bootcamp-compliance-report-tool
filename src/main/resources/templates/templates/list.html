@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Templates Page</title>
+</head>
+<body>
+
+	<div layout:fragment="header">
+		<div th:replace="fragments/header :: header(templates)"></div>
+	</div>
+
+	<div layout:fragment="content">
+		<a class="btn btn-primary mb-3" th:href="@{/templates/form}" role="button">
+			<span class="oi oi-plus" data-glyph="plus" title="New Template" aria-hidden="true"></span>
+			Create Template
+		</a>
+	
+		<h4>Templates Configuration</h4>
+	    <table class="table table-striped table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">Name</th>
+		      <th scope="col" class="table-options-column">Options</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="template : ${templates}">
+		      <td th:text="${template.name}"></td>
+		      <td class="table-options-column">
+		      	<form th:action="@{/templates/} + ${template.id}" th:method="delete" class="form-inline">
+			      	<a th:href="@{/templates/form/} + ${template.id}">Edit</a>
+		      		<button type="submit" class="btn btn-link">Delete</button>
+		      	</form>
+				
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>
