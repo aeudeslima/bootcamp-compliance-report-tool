@@ -4,6 +4,7 @@ import static com.bootcamp.compliancereportgenerator.util.Paths.SCHEDULE_BASE;
 import static com.bootcamp.compliancereportgenerator.util.Paths.SCHEDULE_EDIT_FORM_URL;
 import static com.bootcamp.compliancereportgenerator.util.Paths.SCHEDULE_FORM_PAGE;
 import static com.bootcamp.compliancereportgenerator.util.Paths.SCHEDULE_LIST_PAGE;
+import static com.bootcamp.compliancereportgenerator.util.Paths.SCHEDULE_DELETE_URL;
 
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,13 +55,14 @@ public class ScheduleController {
 	@GetMapping(SCHEDULE_FORM_PAGE)
 	public String formPage(Model model) {
 		model.addAttribute("scheduleForm", new ScheduleForm());
-		model.addAttribute("reports", reportsRepository.findAll());
+		fillFormLists(model);
 		return SCHEDULE_FORM_PAGE;
 	}
 	
 	@PostMapping(SCHEDULE_FORM_PAGE)
 	public String create(@Valid ScheduleForm scheduleForm, BindingResult errors, Model model) throws SchedulerException {
 		if (errors.hasErrors()) {
+			fillFormLists(model);
 			return SCHEDULE_FORM_PAGE;
 		}
 		scheduleService.save(scheduleForm.toSchedule());
@@ -67,4 +70,13 @@ public class ScheduleController {
 		return SCHEDULE_LIST_PAGE;
 	}
 	
+	@DeleteMapping(SCHEDULE_DELETE_URL)
+	public String delete(Model model, @PathVariable("scheduleId") Long id) throws SchedulerException {
+		scheduleService.deleteById(id);
+		return "redirect:/" + SCHEDULE_LIST_PAGE;
+	}
+
+	private void fillFormLists(Model model) {
+		model.addAttribute("reports", reportsRepository.findAll());
+	}
 }

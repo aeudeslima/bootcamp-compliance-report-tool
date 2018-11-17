@@ -16,4 +16,6 @@ public interface ScheduleService {
 	List<Schedule> findAll();
 
 	void delete(Schedule schedule) throws SchedulerException;
+
+	void deleteById(Long id) throws SchedulerException;
 }

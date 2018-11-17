@@ -74,10 +74,9 @@ public class ReportsController {
 	}
 
 	@GetMapping(REPORTS_FORM_PAGE)
-	public String formPage(Report report, Model model) {
+	public String formPage(Model model) {
 		ReportForm reportForm = new ReportForm();
-		model.addAttribute("templates", templateService.findAll());
-		model.addAttribute("spreadsheets", spreadsheetService.findAll());
+		fillFormLists(model);
 		model.addAttribute("reportForm", reportForm);
 		return REPORTS_FORM_PAGE;
 	}
@@ -85,10 +84,11 @@ public class ReportsController {
 	@PostMapping(REPORTS_FORM_PAGE)
 	public String create(@Valid ReportForm reportForm, BindingResult errors, Model model) {
 		if (errors.hasErrors()) {
+			fillFormLists(model);
 			return REPORTS_FORM_PAGE;
 		} else {
 			reportsService.save(reportForm.toReport());
-			return "redirect:" + REPORTS_LIST_PAGE;
+			return "redirect:/" + REPORTS_LIST_PAGE;
 		}
 	}
 	
@@ -113,7 +113,7 @@ public class ReportsController {
 	@DeleteMapping(REPORTS_DELETE_URL)
 	public String delete(@PathVariable("reportId") Long id) {
 		reportsService.deleteById(id);
-		return "redirect:" + REPORTS_LIST_PAGE;
+		return "redirect:/" + REPORTS_LIST_PAGE;
 	}
 	
 	@GetMapping(REPORTS_SENDMAIL_URL)
@@ -129,5 +129,10 @@ public class ReportsController {
 	@GetMapping(REPORTS_MAILSENT_PAGE)	
 	public String mailSent() {
 		return REPORTS_MAILSENT_PAGE;
+	}
+	
+	private void fillFormLists(Model model) {
+		model.addAttribute("templates", templateService.findAll());
+		model.addAttribute("spreadsheets", spreadsheetService.findAll());
 	}
 }

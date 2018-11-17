@@ -136,4 +136,12 @@ public class DefaultScheduleService implements ScheduleService {
 		throw new RuntimeException("No DayOfWeek found for the dayOfWeek param");
 	}
 
+	@Override
+	public void deleteById(Long id) throws SchedulerException {
+		Optional<Schedule> schedule = scheduleRepository.findById(id);
+		if (schedule.isPresent()) {
+			delete(schedule.get());
+		}
+	}
+
 }

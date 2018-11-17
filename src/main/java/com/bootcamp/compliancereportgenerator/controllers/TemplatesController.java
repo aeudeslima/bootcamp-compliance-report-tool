@@ -94,14 +94,14 @@ public class TemplatesController {
 				}
 			});
 			templateService.save(template);
-			return "redirect:" + TEMPLATES_LIST_PAGE;
+			return "redirect:/" + TEMPLATES_LIST_PAGE;
 		}
 	}
 	
 	@DeleteMapping(TEMPLATES_DELETE_URL)
 	public String delete(Model model, @PathVariable("templateId") Long id) {
 		templateService.deleteById(id);
-		return "redirect:" + TEMPLATES_LIST_PAGE;
+		return "redirect:/" + TEMPLATES_LIST_PAGE;
 	}
 			
 }
