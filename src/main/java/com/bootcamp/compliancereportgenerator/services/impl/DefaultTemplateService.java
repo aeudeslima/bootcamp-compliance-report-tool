@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public class DefaultTemplateService implements TemplateService {
 		cfg.setWrapUncheckedExceptions(true);
 		
 		Map<String, Object> root = new HashMap<>();
-		root.put(DEFAULT_VARIABLE_NAME, sheetLines);
+		root.put(DEFAULT_VARIABLE_NAME, convertSheetLinesToTemplate(sheetLines));
 		root.put(DATE_VARIABLE_NAME, date);
 		
 		Template temp = cfg.getTemplate(DEFAULT_TEMPLATE_NAME);
@@ -65,6 +66,18 @@ public class DefaultTemplateService implements TemplateService {
 		}
 	}
 
+	private List<Map<String, Object>> convertSheetLinesToTemplate(List<SheetLine> sheetLines) {
+		List<Map<String, Object>> result = new ArrayList<>();
+		for (SheetLine sheetLine : sheetLines) {
+			Map<String, Object> columns = new HashMap<>();
+			for (String columnName : sheetLine.getColumns().keySet()) {
+				columns.put(columnName, sheetLine.getColumns().get(columnName));
+			}
+			result.add(columns);
+		}
+		return result;
+	}
+	
 	@Override
 	public List<com.bootcamp.compliancereportgenerator.models.Template> findAll() {
 		return templateRepository.findAll();

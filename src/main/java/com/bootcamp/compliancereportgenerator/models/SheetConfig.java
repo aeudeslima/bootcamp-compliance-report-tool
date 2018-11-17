@@ -1,5 +1,8 @@
 package com.bootcamp.compliancereportgenerator.models;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,13 +17,7 @@ public class SheetConfig {
 	private Long id;
 	private String sheetName;
 	private String range;
-	private Character icIdColumn;
-	private Character icNameColumn;
-	private Character icSEMColumn;
-	private Character dayColumn;
-	private Character workTimeColumn;
-	private Character deepWorkBlocksColumn;
-	private Character devTimeColumn;
-	private Character dailyCiCColumn;
-	private Character wsProColumn;
+	
+	@ElementCollection
+	private List<String> columnNames;
 }

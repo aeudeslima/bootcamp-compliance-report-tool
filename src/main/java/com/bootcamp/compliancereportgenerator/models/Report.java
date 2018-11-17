@@ -1,6 +1,5 @@
 package com.bootcamp.compliancereportgenerator.models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,7 +26,7 @@ public class Report {
     private String mailCc;
     private String mailBcc;
     
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne
     private Spreadsheet spreadsheet;
     
     @ManyToOne

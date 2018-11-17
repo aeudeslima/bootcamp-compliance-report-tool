@@ -5,10 +5,10 @@ import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_DELETE_U
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_EDIT_FORM_URL;
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_FORM_PAGE;
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_LIST_PAGE;
+import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_MAILSENT_PAGE;
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_PREVIEW_PAGE;
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_PREVIEW_URL;
 import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_SENDMAIL_URL;
-import static com.bootcamp.compliancereportgenerator.util.Paths.REPORTS_MAILSENT_PAGE;
 
 import java.util.Date;
 import java.util.List;
@@ -32,6 +32,7 @@ import com.bootcamp.compliancereportgenerator.models.SheetLine;
 import com.bootcamp.compliancereportgenerator.services.ReportMailService;
 import com.bootcamp.compliancereportgenerator.services.ReportService;
 import com.bootcamp.compliancereportgenerator.services.SheetImportService;
+import com.bootcamp.compliancereportgenerator.services.SpreadsheetService;
 import com.bootcamp.compliancereportgenerator.services.TemplateService;
 
 @Controller
@@ -49,6 +50,9 @@ public class ReportsController {
 	@Autowired
 	private ReportMailService reportMailService;
 	
+	@Autowired
+	private SpreadsheetService spreadsheetService;
+	
 	@GetMapping({REPORTS_BASE, REPORTS_LIST_PAGE})
 	public String list(Model model) {
 		List<Report> reportList = reportsService.findAll();
@@ -61,6 +65,7 @@ public class ReportsController {
 		Optional<Report> report = reportsService.findById(id);
 		if (report.isPresent()) {
 			model.addAttribute("templates", templateService.findAll());
+			model.addAttribute("spreadsheets", spreadsheetService.findAll());
 			model.addAttribute("reportForm", new ReportForm(report.get()));
 			return REPORTS_FORM_PAGE;
 		} else {
@@ -72,6 +77,7 @@ public class ReportsController {
 	public String formPage(Report report, Model model) {
 		ReportForm reportForm = new ReportForm();
 		model.addAttribute("templates", templateService.findAll());
+		model.addAttribute("spreadsheets", spreadsheetService.findAll());
 		model.addAttribute("reportForm", reportForm);
 		return REPORTS_FORM_PAGE;
 	}

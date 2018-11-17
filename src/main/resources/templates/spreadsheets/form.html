@@ -2,42 +2,95 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Templates Page</title>
-    <link rel="stylesheet" th:href="@{/css/templates/form.css}">
+    <title>Spreadsheets Page</title>
 </head>
 <body>
 	<div layout:fragment="header">
-		<div th:replace="fragments/header :: header(templates)"></div>
+		<div th:replace="fragments/header :: header(spreadsheets)"></div>
 	</div>
 
 	<div layout:fragment="content">
-	    <h2>Template</h2>
-		<form method="post" th:action="@{/templates/form}" th:object="${template}">
+	    <h2>Spreadsheet</h2>
+		<form method="post" th:action="@{/spreadsheets/form}" th:object="${spreadsheetForm}">
 			<input type="hidden" th:field="*{id}"/>
-			<div class="form-group">
-				<label id="templateNameInput">Name</label>
-				<input type="text" th:field="*{name}"
-					class="form-control" id="templateNameInput"
-					placeholder="Template Name"
-					th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
-				<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
-                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
-                </ul>		
+			<div class="row">
+				<div class="form-group col">
+					<label id="nameInput">Name</label>
+					<input type="text" th:field="*{name}"
+						class="form-control" id="nameInput"
+						placeholder="Name"
+						th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('name')}">
+	                    <li class="error" th:each="err : ${#fields.errors('name')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group col">
+					<label id="spreadsheetURLInput">Spreadsheet URL</label>
+					<input type="text" th:field="*{spreadsheetURL}"
+						class="form-control" id="spreadsheetURLInput"
+						placeholder="Spreadsheet URL"
+						th:classappend="${#fields.hasErrors('spreadsheetURL')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('spreadsheetURL')}">
+	                    <li class="error" th:each="err : ${#fields.errors('spreadsheetURL')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="templateTextInput">Text:</label>
-				<textarea class="form-control" id="templateTextInput" rows="15"
-					th:field="*{text}"
-					th:classappend="${#fields.hasErrors('text')} ? 'is-invalid' : ''"></textarea>
-				<ul class="help-inline" th:if="${#fields.hasErrors('text')}">
-                    <li class="error" th:each="err : ${#fields.errors('text')}" th:text="${err}"></li>
-                </ul>	
-			</div>
+			<fieldset>
+				<legend>Cells Configuration</legend>
+				
+				<div class="form-group">
+					<label id="sheetConfigRangeInput">Column Range (e.g. "A2:I")</label>
+					<input type="text" th:field="*{sheetConfigRange}"
+						class="form-control" id="sheetConfigRangeInput"
+						placeholder="Column Range"
+						th:classappend="${#fields.hasErrors('sheetConfigRange')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('sheetConfigRange')}">
+	                    <li class="error" th:each="err : ${#fields.errors('sheetConfigRange')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group">
+					<label id="sheetConfigSheetNameInput">Sheet Name (e.g. "Index")</label>
+					<input type="text" th:field="*{sheetConfigSheetName}"
+						class="form-control" id="sheetConfigSheetNameInput"
+						placeholder="Sheet Name"
+						th:classappend="${#fields.hasErrors('sheetConfigSheetName')} ? 'is-invalid' : ''"/>
+					<ul class="help-inline" th:if="${#fields.hasErrors('sheetConfigSheetName')}">
+	                    <li class="error" th:each="err : ${#fields.errors('sheetConfigSheetName')}" th:text="${err}"></li>
+	                </ul>		
+				</div>
+				<div class="form-group">
+					<div id="column-input-container">
+						<div th:each="columnName : *{sheetConfigColumnNames}" class="form-group mb-0">
+							<button type="button" class="btn btn-link btn-sm remove-column">
+								<span class="oi oi-trash" data-glyph="trash" title="remove" aria-hidden="true"></span>
+							</button>
+							<label>Column Identifier</label>
+							<input type="text" name="sheetConfigColumnNames" th:value="${columnName}" /> 
+						</div>
+						<button type="button" class="btn btn-link" id="new-column-button">
+							<span class="oi oi-plus" data-glyph="plus" title="New Column" aria-hidden="true"></span>
+							New Column Identifier
+						</button>
+					</div>			
+				</div>
+				
+			</fieldset>
 			<button type="submit" class="btn btn-primary">Save</button>
 		</form>
-
-		
+		<div class="d-none" id="column-template">
+			<div class="form-group">
+				<button type="button" class="btn btn-link btn-sm remove-column">
+					<span class="oi oi-trash" data-glyph="trash" title="remove" aria-hidden="true"></span>
+				</button>
+				<label>Column Identifier</label>
+				<input type="text" name="sheetConfigColumnNames" /> 
+			</div>
+		</div>
 	</div>
-	
+
+	<th:block layout:fragment="post-scripts">
+		<script th:src="@{/js/spreadsheets/form.js}"></script>
+	</th:block>
+		
 </body>
 </html>

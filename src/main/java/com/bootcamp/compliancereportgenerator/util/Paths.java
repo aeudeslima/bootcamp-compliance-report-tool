@@ -30,6 +30,11 @@ public class Paths {
 	public static final String SCHEDULE_FORM_PAGE = SCHEDULE_BASE + "/form";
 	public static final String SCHEDULE_EDIT_FORM_URL = SCHEDULE_BASE + "/form/{schedulerId}";
 	
+	public static final String SPREADSHEET_BASE = "/spreadsheets";
+	public static final String SPREADSHEET_LIST_PAGE = SPREADSHEET_BASE + "/list";
+	public static final String SPREADSHEET_FORM_PAGE = SPREADSHEET_BASE + "/form";
+	public static final String SPREADSHEET_EDIT_FORM_URL = SPREADSHEET_BASE + "/form/{spreadsheetId}";
+	
 	public static final String ERROR_PAGE = "/error";
 	
 	

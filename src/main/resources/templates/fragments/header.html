@@ -1,4 +1,4 @@
-<div th:fragment="header(selected)" xmlns:th="http://www.thymeleaf.org">
+	<div th:fragment="header(selected)" xmlns:th="http://www.thymeleaf.org">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Compliance Report Generator</a>
         <div class="collapse" th:classappend="${selected == 'login'} ? 'd-none' : 'navbar-collapse'">
@@ -19,6 +19,12 @@
                     <a class="nav-link" th:href="@{/templates}">
                     	<span class="oi oi-code" data-glyph="code" title="Templates" aria-hidden="true"></span>
                     	Templates
+                    </a>
+                </li>
+                <li class="nav-item" th:classappend="${selected == 'spreadsheets'} ? active : ''">
+                    <a class="nav-link" th:href="@{/spreadsheets}">
+                    	<span class="oi oi-spreadsheet" data-glyph="spreadsheet" title="Spreadsheets" aria-hidden="true"></span>
+                    	Spreadsheets
                     </a>
                 </li>
             </ul>

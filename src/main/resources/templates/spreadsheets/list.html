@@ -2,16 +2,16 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{basiclayout}"
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Templates Page</title>
+    <title>Spreadsheets Page</title>
 </head>
 <body>
 
 	<div layout:fragment="header">
-		<div th:replace="fragments/header :: header(templates)"></div>
+		<div th:replace="fragments/header :: header(spreadsheets)"></div>
 	</div>
 
 	<div layout:fragment="content">
-		<a class="btn btn-primary" th:href="@{/templates/form}" role="button">Create Template</a>
+		<a class="btn btn-primary" th:href="@{/spreadsheets/form}" role="button">Create Spreadsheet</a>
 	
 	    <table class="table table-striped table-hover">
 		  <thead>
@@ -22,15 +22,14 @@
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr th:each="template : ${templates}">
-		      <th scope="row" th:text="${template.id}"></th>
-		      <td th:text="${template.name}"></td>
+		    <tr th:each="spreadsheet : ${spreadsheets}">
+		      <th scope="row" th:text="${spreadsheet.id}"></th>
+		      <td th:text="${spreadsheet.name}"></td>
 		      <td class="table-options-column">
-		      	<form th:action="@{/templates/} + ${template.id}" th:method="delete" class="form-inline">
-			      	<a th:href="@{/templates/form/} + ${template.id}">Edit</a>
+		      	<form th:action="@{/spreadsheets/} + ${spreadsheet.id}" th:method="delete" class="form-inline">
+			      	<a th:href="@{/spreadsheets/form/} + ${spreadsheet.id}">Edit</a>
 		      		<button type="submit" class="btn btn-link">Delete</button>
 		      	</form>
-				
 		      </td>
 		    </tr>
 		  </tbody>

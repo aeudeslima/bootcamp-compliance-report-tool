@@ -29,12 +29,16 @@
 	                </ul>		
 				</div>
 				<div class="form-group col-md-6">
-					<label id="spreadsheetURLInput">Source Sheet URL</label>
-					<input type="text" th:field="*{spreadsheetURL}"
-						class="form-control" id="spreadsheetURLInput"
-						th:classappend="${#fields.hasErrors('spreadsheetURL')} ? 'is-invalid' : ''"/>
-					<ul class="help-inline" th:if="${#fields.hasErrors('spreadsheetURL')}">
-	                    <li class="error" th:each="err : ${#fields.errors('spreadsheetURL')}" th:text="${err}"></li>
+					<label id="spreadsheetIdInput">Spreadsheet</label>
+					<select th:field="*{spreadsheetId}"
+						class="form-control" id="spreadsheetIdInput"
+						th:classappend="${#fields.hasErrors('spreadsheetId')} ? 'is-invalid' : ''">
+						<th:block th:each="s : ${spreadsheets}">
+							<option th:value="${s.id}" th:text="${s.name}"></option>
+						</th:block>
+					</select>
+					<ul class="help-inline" th:if="${#fields.hasErrors('spreadsheetId')}">
+	                    <li class="error" th:each="err : ${#fields.errors('spreadsheetId')}" th:text="${err}"></li>
 	                </ul>
 				</div>
 			</div>

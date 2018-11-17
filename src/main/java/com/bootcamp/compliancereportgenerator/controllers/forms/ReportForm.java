@@ -23,8 +23,8 @@ public class ReportForm {
 	private String mailTo;
 	private String mailCc;
 	private String mailBcc;
-	@NotEmpty
-	private String spreadsheetURL;
+	@NotNull
+	private Long spreadsheetId;
 	@NotNull
 	private Long templateId;
 	
@@ -40,7 +40,7 @@ public class ReportForm {
 		mailCc = report.getMailCc();
 		mailBcc = report.getMailBcc();
 		if (report.getSpreadsheet() != null) {
-			spreadsheetURL = report.getSpreadsheet().getSpreadsheetURL();
+			spreadsheetId = report.getSpreadsheet().getId();
 		}
 		if (report.getTemplate() != null) {
 			templateId = report.getTemplate().getId();
@@ -58,7 +58,7 @@ public class ReportForm {
 		report.setMailBcc(mailBcc);
 		
 		Spreadsheet spreadsheet = new Spreadsheet();
-		spreadsheet.setSpreadsheetURL(spreadsheetURL);
+		spreadsheet.setId(spreadsheetId);
 		report.setSpreadsheet(spreadsheet);
 		
 		Template template = new Template();
